@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_project_subtask_form" model="ir.ui.view">
+        <field name="name">project.subtask.form</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <form string="Project Subtask">
+                <group>
+                    <field name="tags"/>
+                    <field name="project_days"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_subtask_tree" model="ir.ui.view">
+        <field name="name">project.subtask.tree</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <tree string="Project Subtasks">
+                <field name="tags"/>
+                <field name="project_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- اختيار مكان عرض الفيو -->
+    <record id="action_project_subtask" model="ir.actions.act_window">
+        <field name="name">Project Subtasks</field>
+        <field name="res_model">project.subtask</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_project_subtask_root" name="Project Subtasks"/>
+    <menuitem id="menu_project_subtask" name="Subtasks" parent="menu_project_subtask_root" action="action_project_subtask"/>
+</odoo>
+
