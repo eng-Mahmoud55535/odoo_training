@@ -1,28 +1,14 @@
 {
-<<<<<<< HEAD
-    'name': 'Custom CRM',
+    'name': 'CRM Lead Extension',
     'version': '1.0',
-    'summary': 'Custom CRM module with Next Call Date field',
-    'description': 'Extends CRM Lead with a new field: Next Call Date',
+    'summary': 'Add CRM Lead User field to crm.lead',
+    'description': 'Adds a field crm_lead_user_id to track the user on leads.',
+    'category': 'CRM',
     'author': 'Mahmoud',
     'depends': ['crm'],
-    'data': [],
-    'installable': True,
-    'application': False,
-}
-
-=======
-    'name': 'Project Custom',
-    'version': '1.0',
-    'category': 'Project',
-    'summary': 'Custom fields and wizard for Project',
-    'depends': ['project', 'crm'],
     'data': [
-        'views/project_task_views.xml',
-        'wizards/project_lead_wizard_views.xml',
-        'views/project_security.xml',  # السطر الجديد
+        'views/crm_lead_views.xml',
     ],
     'installable': True,
     'application': False,
-}
->>>>>>> 8a4ef33 (Initial commit: add project_custom module with all tasks)
+    'license': 'LGPL-3',
