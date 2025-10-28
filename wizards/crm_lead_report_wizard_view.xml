@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_report_wizard_form" model="ir.ui.view">
+        <field name="name">crm.lead.report.wizard.form</field>
+        <field name="model">crm.lead.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="CRM Lead Report">
+                <sheet>
+                    <group>
+                        <group string="Date Range">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_print_pdf" 
+                            string="Print PDF" 
+                            type="object" 
+                            class="btn-primary"
+                            data-hotkey="q"/>
+                    <button name="action_print_excel"
+                            string="Download Excel Report"
+                            type="object"
+                            class="btn-success"
+                            data-hotkey="w"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_lead_report_wizard" model="ir.actions.act_window">
+        <field name="name">CRM Lead Report</field>
+        <field name="res_model">crm.lead.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="crm_lead_report_wizard_form"/>
+    </record>
+
+    <menuitem id="menu_crm_lead_report"
+              name="Report"
+              parent="menu_crm_lead_root"
+              action="action_crm_lead_report_wizard"
+              sequence="30"
+              groups="odoo_crm_custom.group_crm_lead"/>
+
+    <record id="action_report_crm_lead_pdf" model="ir.actions.report">
+        <field name="name">CRM Leads Report</field>
+        <field name="model">crm.lead</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">odoo_crm_custom.report_crm_lead_document</field>
+        <field name="report_file">odoo_crm_custom.report_crm_lead_document</field>
+        <field name="print_report_name">'CRM Leads Report - %s' % (object.date_from)</field>
+        <field name="binding_model_id" ref="crm.model_crm_lead"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_crm_lead_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>CRM Leads Report</h2>
+                    <p>From: <span t-field="data['form']['date_from']"/></p>
+                    <p>To: <span t-field="data['form']['date_to']"/></p>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Lead Name</th>
+                                <th>Next Activity Date</th>
+                                <th>Stage</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="leads" t-value="model.browse(data['form']['lead_ids'])"/>
+                            <t t-foreach="leads" t-as="lead">
+                                <tr>
+                                    <td><span t-field="lead.name"/></td>
+                                    <td><span t-field="lead.next_activity_date"/></td>
+                                    <td><span t-field="lead.stage_id.name"/></td>
+                                    <td><span t-field="lead.priority"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
