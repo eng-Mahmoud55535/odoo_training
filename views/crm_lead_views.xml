@@ -1,0 +1,65 @@
+<<<<<<< HEAD
+<odoo>
+    <record id="view_crm_lead_form_inherit_user" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.user</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="crm_lead_user_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_crm_lead_extension"
+              name="CRM Lead"
+              parent="base.menu_sales"
+              sequence="20 " 
+              groups="crm_lead_extension.group_crm_lead_manager"/>
+   <record id="view_crm_lead_tree_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_lead_tree"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="lead_visibility" position="after">
+                    <filter string="My Leads" domain="[('lead_visibility','=','user')]"/>
+                    <filter string="Admin Leads" domain="[('lead_visibility','=','admin')]"/>
+                </field>
+            </tree>
+        </field>
+     </record> 
+</odoo>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_lead_tree_custom" model="ir.ui.view">
+        <field name="name">crm.lead.tree.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="stage_id"/>
+                <field name="user_id"/>
+                <field name="x_crm_lead_user_display"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_crm_lead_root" name="CRM Lead" sequence="10"/>
+    
+    <menuitem id="menu_crm_lead_admin" 
+              name="Admin" 
+              parent="menu_crm_lead_root" 
+              action="action_crm_lead2"
+              sequence="10"
+              groups="base.group_system"/>
+              
+    <menuitem id="menu_crm_lead_demo" 
+              name="Demo" 
+              parent="menu_crm_lead_root" 
+              action="action_crm_lead2"
+              sequence="20"
+              groups="base.group_user"/>
+</odoo>
+>>>>>>> c44e047 (task report and wizard)
